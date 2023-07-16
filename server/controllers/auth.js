@@ -2,10 +2,8 @@ import { comparePassword, hashedPassword } from "../helpers/authHelper.js";
 import { UserDetails } from "../models/userDetails.js";
 import JWT from "jsonwebtoken";
 
-
 export const RegisterUser = async (req, res, next) => {
   const { name, email, password, phone, address } = req.body;
-
 
   if (!name || !email || !password || !phone || !address) {
     return res.send({
@@ -29,7 +27,7 @@ export const RegisterUser = async (req, res, next) => {
         message: "User already exists",
       });
 
-    const hashPassword =await hashedPassword(password);
+    const hashPassword = await hashedPassword(password);
 
     const newUser = new UserDetails({
       name,
@@ -54,63 +52,62 @@ export const RegisterUser = async (req, res, next) => {
   }
 };
 
+export const LoginUser = async (req, res) => {
+  const { email, password } = req.body;
 
-export const LoginUser = async(req,res)=>{
-    const { email, password } = req.body;
+  if (!email || !password) {
+    return res.send({
+      error: "Please provide all required fields.",
+      missingFields: {
+        email: !email,
+        password: !password,
+      },
+    });
+  }
 
-    if (!email || !password) {
-        return res.send({
-          error: "Please provide all required fields.",
-          missingFields: {
-            email: !email,
-            password: !password,
-          },
-        });
-      }
-    
+  try {
+    const user = await UserDetails.findOne({ email });
+    // console.log(user)
 
-    try{
-        
+    if (!user)
+      return res.status(500).send({
+        success: false,
+        message: "No User Exist",
+      });
 
-        
-        
-        const user = await UserDetails.findOne({email})
-        // console.log(user)
+    const passwordMatch = await comparePassword(password, user.password);
 
-        if(!user)
-            return res.status(500).send({
-            success: false,
-            message: "No User Exist",
-          });
-        
-        const passwordMatch = await comparePassword(password,user.password);
+    if (!passwordMatch)
+      return res.status(500).send({
+        success: false,
+        message: "Wrong Credentials",
+      });
 
-        if(!passwordMatch)
-            return res.status(500).send({
-            success: false,
-            message: "Wrong Credentials",
-          });
-
-
-          //JWT
-          const token = JWT.sign({_id:user._id},process.env.JWT_SECRET_KEY,{
-            expiresIn:"14d"
-          })
+    //JWT
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "14d",
+    });
 
 
-    res.status(200).send({
+
+    res.cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
         success: true,
         message: "Login Sussessful",
-        
-    })
-    }
-    catch (error) {
-        return res.status(500).send({
-          success: false,
-          message: "Error while Login",
-          error:error,
-        })
+      });
 
-    }
-}
+
+
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Error while Login",
+      error: error,
+    });
+  }
+};
+
 
