@@ -12,7 +12,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="flex items-center w-[100vw] justify-between px-64 bg-indigo-800 ">
+    <div className="flex items-center w-[100vw] h-[66vh] justify-between px-64 bg-indigo-800 ">
      <div className="flex flex-col gap-5">
      <h1 className="text-6xl font-bold text-white  leading-tight">Fashion Up Look UP..<br />Get the best products</h1>
      <p className="text-white text-lg">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga<br /> unde ea libero. Perferendis, vel soluta neque totam ab maiores repudiandae?</p>

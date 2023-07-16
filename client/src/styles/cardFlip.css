@@ -1,0 +1,5 @@
+@layer utilities{
+    .flipped {
+        transform: rotateY(180deg);
+      }
+}
