@@ -5,7 +5,7 @@ import { validateIsAdmin, validateUserAuth } from "../middlewares/authMiddleware
 const router = express.Router()
 
 router.post("/register",RegisterUser)
-router.post("/login",validateUserAuth,LoginUser)
+router.post("/login",LoginUser)
 router.get("/admin",validateIsAdmin,(req,res)=>res.send("Admin"))
 
 export default router
