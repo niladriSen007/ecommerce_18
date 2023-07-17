@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdAccountCircle } from "react-icons/md";
+import { useAuth } from "../contextApi/store";
 
 const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+
+  const { auth, setAuth } = useAuth();
+
+  console.log(auth);
+
+  const logoffUser = () =>{
+    setAuth(_=>({user:""}))
+  }
 
   return (
     <div className="px-32 shadow-lg">
@@ -62,23 +71,33 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
               to="#"
               className="text-indigo-800  text-xl hover:text-indigo-900"
             >
-              Account
+              <span>{auth ? auth?.user?.name : "Account"}</span>
             </Link>
           </div>
-            <Link
-              to="/login"
-              className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
-            >
+          <Link
+            to={`/login`}
+            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
+          >
+            {auth?.user ? (
+              <button className="bg-indigo-700 text-white px-2 py-1 rounded-sm" onClick={logoffUser}>
+                Logoff
+              </button>
+            ) : (
               <button className="bg-indigo-700 text-white px-2 py-1 rounded-sm">
                 Login
               </button>
-            </Link>
+            )}
+          </Link>
+          {!auth?.user && (
             <Link
               to="/register"
               className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
             >
-              <button className="text-indigo-800 bg-white px-2 py-1 rounded-sm border-2 border-indigo-700">Register</button>
+              <button className="text-indigo-800 bg-white px-2 py-1 rounded-sm border-2 border-indigo-700">
+                Register
+              </button>
             </Link>
+          )}
         </div>
         <div className="md:hidden flex items-center">
           <button

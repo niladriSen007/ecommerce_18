@@ -1,5 +1,9 @@
 import { useState } from "react";
 import {  toast } from 'react-toastify';
+import axios from "axios"
+import { Link, useNavigate } from "react-router-dom";
+const REACT_APP_API = "http://localhost:5000"
+
 
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -10,16 +14,18 @@ const Register = () => {
     address: "",
   });
 
+  const navigateTo = useNavigate()
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     // setRegisterData({ ...registerData, [name]: value });
     setRegisterData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(registerData);
-    toast.success('Registration Successful');
+    // toast.success('Registration Successful');
     setRegisterData((_) => {
       return {
         name: "",
@@ -30,14 +36,29 @@ const Register = () => {
       };
     });
     // Add your registration logic here
+
+    try{
+        const res = await axios.post(`${REACT_APP_API}/auth/register`,{...registerData})
+
+        if(res.status)
+          {
+            toast.success("New user has been added")
+            navigateTo("/login")
+          }
+        else
+          toast.error("Please give proper information")
+    }
+    catch(e){
+      toast.error("Invalid Credentials")
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[78.8vh] bg-gray-100 ">
+    <div className="flex flex-col items-center justify-center h-[78.8vh] bg-gray-100 py-72">
       <h2 className="text-4xl font-bold mb-4 text-indigo-700">Register</h2>
       <div className="flex items-center justify-center">
         <div>
-          <form className="w-[30vw] bg-white rounded-lg shadow-md px-6 py-8">
+          <form className="w-[30vw] bg-white rounded-lg shadow-md px-6 ">
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -135,6 +156,7 @@ const Register = () => {
             >
               Register
             </button>
+            <p className="text-indigo-800 text-center font-medium py-2">Already have an Account? <Link to="/login" className="underline">Login here</Link></p>
           </form>
         </div>
 

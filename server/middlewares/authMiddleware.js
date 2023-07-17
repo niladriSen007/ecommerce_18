@@ -1,17 +1,20 @@
 import JWT from "jsonwebtoken";
 import { UserDetails } from "../models/userDetails.js";
+const JWT_SECRET_KEY = "niladriwillbeagooddeveloperatanyhow"
+
 
 export const validateUserAuth = async (req, res, next) => {
   try {
+    console.log(req.headers.cookie)
     const access_token = req.headers.cookie.split("=")[1].toString();
-    JWT.verify(access_token, process.env.JWT_SECRET_KEY, (err, user) => {
+    JWT.verify(access_token,JWT_SECRET_KEY, (err, user) => {
       if (err) res.status(403).json("Token not valid..");
       req.user = user;
       // console.log(req.user);
       next();
     });
   } catch (e) {
-    res.status(401).json({ message: "Invalid Token" });
+    res.status(401).json({ message: "Invalid Token catch" });
   }
 };
 
