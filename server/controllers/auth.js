@@ -117,6 +117,7 @@ export const LoginUser = async (req, res) => {
       .send({
         success: true,
         message: "Login Sussessful",
+        user:user
       });
 
 

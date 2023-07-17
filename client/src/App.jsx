@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Register from "./pages/Register";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Login from "./pages/Login";
 
 const App = () => {
 
@@ -54,8 +55,8 @@ const App = () => {
         element:<Register />
        },
        {
-        path:"/contact",
-        element:<Contact />
+        path:"/login",
+        element:<Login />
        },
        {
         path:"/*",
