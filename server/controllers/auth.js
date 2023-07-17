@@ -1,6 +1,7 @@
 import { comparePassword, hashedPassword } from "../helpers/authHelper.js";
 import { UserDetails } from "../models/userDetails.js";
 import JWT from "jsonwebtoken";
+const JWT_SECRET_KEY = "niladriwillbeagooddeveloperatanyhow"
 
 export const RegisterUser = async (req, res, next) => {
   const { name, email, password, phone, address } = req.body;
@@ -39,10 +40,29 @@ export const RegisterUser = async (req, res, next) => {
 
     await newUser.save();
 
-    res.status(200).send({
-      success: true,
-      message: "New User has been Added",
+
+    //JWT
+    const token = JWT.sign({ id: newUser._id }, JWT_SECRET_KEY, {
+      expiresIn: "14d",
     });
+
+
+
+    res.cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
+        success: true,
+        message: "New User has been Added",
+      });
+
+    
+
+    // res.status(200).send({
+    //   success: true,
+    //   message: "New User has been Added",
+    // });
   } catch (error) {
     return res.status(500).send({
       success: false,
@@ -84,7 +104,7 @@ export const LoginUser = async (req, res) => {
       });
 
     //JWT
-    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+    const token = JWT.sign({ id: user._id }, JWT_SECRET_KEY, {
       expiresIn: "14d",
     });
 
@@ -111,3 +131,37 @@ export const LoginUser = async (req, res) => {
 };
 
 
+
+export const googleAuthentication = async (req, res, next) => {
+  try {
+    const user = await UserDetails.findOne({ email: req.body.email });
+    if (user) {
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.JWT_SECRET_KEY
+      );
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json(user._doc);
+    } else {
+        const newUser = new UserDetails({
+            ...req.body,
+            fromGoogle:true,
+        })
+        const savedUser = await newUser.save();
+        const token = jwt.sign({ id: savedUser._id }, process.env.SECRET_KEY);
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+        })
+        .status(200)
+        .json(savedUser._doc);
+    }
+  } catch (e) {
+    next(e);
+  }
+};
