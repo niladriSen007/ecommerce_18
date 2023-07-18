@@ -5,6 +5,7 @@ import cors from "cors"
 import morgan from "morgan"
 import { connectDB } from "./database/connection.js";
 import  authRouter  from "./routers/authRoutes.js";
+import  userRouter  from "./routers/userRoutes.js";
 
 
 dotenv.config()
@@ -26,6 +27,7 @@ app.use(morgan("dev"))
 
 //defning routes
 app.use("/auth",authRouter)
+app.use("/user",userRouter)
 
 
 //listening to port
