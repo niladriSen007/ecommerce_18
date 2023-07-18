@@ -17,7 +17,7 @@ const Login = () => {
   const {auth,setAuth} = useAuth()
 
 
-  console.log(auth)
+  // console.log(auth)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +47,7 @@ const Login = () => {
         navigateTo("/")
         console.log(res.data.user)
         setAuth(prev=>({...prev,user:res.data.user}))
-
+        localStorage.setItem("activeUser",JSON.stringify(res.data.user))
       } else toast.error("Invalid Credentials -- try");
     } catch (e) {
       toast.error("Invalid Credentials");

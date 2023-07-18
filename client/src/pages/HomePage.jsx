@@ -1,10 +1,10 @@
-import React from 'react'
 import Hero from '../../src/components/Hero'
 
 const HomePage = () => {
   return (
     <div>
         <Hero />
+        
     </div>
   )
 }
