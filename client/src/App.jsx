@@ -19,6 +19,7 @@ import AdminSideBar from "./components/AdminSideBar";
 import AdminContainer from "./components/AdminContainer";
 import CreateProductAdmin from "./components/CreateProductAdmin";
 import AdminDashboard from "./pages/AdminDashboard";
+import UsersAdmin from "./components/UsersAdmin";
 
 const App = () => {
   const Layout = () => (
@@ -86,6 +87,10 @@ const App = () => {
             {
               path: "/dashboard/admin/createProduct",
               element: <CreateProductAdmin />,
+            },
+            {
+              path: "/dashboard/admin/users",
+              element: <UsersAdmin />,
             },
           ],
         },
