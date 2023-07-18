@@ -16,6 +16,7 @@ import Register from "./pages/Register";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
 
@@ -57,6 +58,10 @@ const App = () => {
        {
         path:"/login",
         element:<Login />
+       },
+       {
+        path:"/dashboard",
+        element:<Dashboard />
        },
        {
         path:"/*",

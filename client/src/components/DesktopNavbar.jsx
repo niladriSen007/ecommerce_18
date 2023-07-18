@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdAccountCircle } from "react-icons/md";
 import { useAuth } from "../contextApi/store";
+import { toast } from "react-toastify";
 
 const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
   const toggleMenu = () => {
@@ -10,11 +11,13 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
 
   const { auth, setAuth } = useAuth();
 
-  console.log(auth);
+  // console.log(auth);
 
-  const logoffUser = () =>{
-    setAuth(_=>({user:""}))
-  }
+  const logoffUser = () => {
+    setAuth((_) => ({ ..._, user: "" }));
+    localStorage.removeItem("activeUser")
+    toast.success("Logged out successfully")
+  };
 
   return (
     <div className="px-32 shadow-lg">
@@ -49,6 +52,12 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
           >
             Contact
           </Link>
+          {(auth?.user?.role!== 0 && auth?.user!=="") && <Link
+            to="/dashboard"
+            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
+          >
+            Dashboard
+          </Link>}
         </div>
         <div className="flex items-center gap-6">
           <input
@@ -79,8 +88,11 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
             className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
           >
             {auth?.user ? (
-              <button className="bg-indigo-700 text-white px-2 py-1 rounded-sm" onClick={logoffUser}>
-                Logoff
+              <button
+                className="bg-indigo-700 text-white px-2 py-1 rounded-sm"
+                onClick={logoffUser}
+              >
+                Sign Out
               </button>
             ) : (
               <button className="bg-indigo-700 text-white px-2 py-1 rounded-sm">
