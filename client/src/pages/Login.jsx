@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../contextApi/store";
 const REACT_APP_API = "http://localhost:5000";
@@ -14,6 +14,8 @@ const Login = () => {
 
   const navigateTo = useNavigate()
 
+  const location = useLocation()
+
   const {auth,setAuth} = useAuth()
 
 
@@ -26,12 +28,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginData((_) => {
-      return {
-        email: "",
-        password: "",
-      };
-    });
+    
     // Add your Login logic here
     console.log(loginData)
 
@@ -41,16 +38,25 @@ const Login = () => {
       });
 
 
+      
+
+
 
       if (res.status) {
         toast.success("Login Successful");
-        navigateTo("/")
-        console.log(res.data.user)
         setAuth(prev=>({...prev,user:res.data.user}))
         localStorage.setItem("activeUser",JSON.stringify(res.data.user))
+        navigateTo(location?.state || "/")
+        console.log(res.data.user)
       } else toast.error("Invalid Credentials -- try");
     } catch (e) {
       toast.error("Invalid Credentials");
+      setLoginData((_) => {
+        return {
+          email: "",
+          password: "",
+        };
+      });
     }
   };
 
@@ -104,12 +110,18 @@ const Login = () => {
             >
               Login
             </button>
-            <p className="text-indigo-800 font-medium py-2 text-center">
-              New User ?{" "}
-              <Link to="/register" className="underline">
+            <button className="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              New User ?{"  "}
+              <Link to="/register" className="underline ">
                 Register here
               </Link>
-            </p>
+            </button>
+            <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Forgot Password ?{" "}
+              <Link to="/forgotpassword" className="underline">
+                Click here😎
+              </Link>
+            </button>
           </div>
         </form>
       </div>
