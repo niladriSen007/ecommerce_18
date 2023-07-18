@@ -11,15 +11,17 @@ import Register from "./pages/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
 import ProtectedDashboard from "./components/ProtectedDashboard";
 import ForgetPassword from "./pages/ForgotPassword";
 import CreateCategoryAdmin from "./components/CreateCategoryAdmin";
 import AdminSideBar from "./components/AdminSideBar";
 import AdminContainer from "./components/AdminContainer";
 import CreateProductAdmin from "./components/CreateProductAdmin";
-import AdminDashboard from "./pages/AdminDashboard";
 import UsersAdmin from "./components/UsersAdmin";
+import UserDashboardSidebar from "./components/UserDashboardSidebar";
+import UserDashboardMain from "./pages/UserDashboardMain";
+import UserProfile from "./components/UserProfile";
+import UserOrders from "./components/UserOrders";
 
 const App = () => {
   const Layout = () => (
@@ -40,6 +42,16 @@ const App = () => {
       <AdminContainer>
         <Outlet />
       </AdminContainer>
+    </div>
+  );
+
+
+  const UserLayout = () => (
+    <div className="flex justify-between">
+      <UserDashboardSidebar />
+      <UserDashboardMain>
+        <Outlet />
+      </UserDashboardMain>
     </div>
   );
 
@@ -91,6 +103,20 @@ const App = () => {
             {
               path: "/dashboard/admin/users",
               element: <UsersAdmin />,
+            },
+          ],
+        },
+        {
+          path: "/dashboard",
+          element: <UserLayout />,
+          children: [
+            {
+              path: "/dashboard/user/Profile",
+              element: <UserProfile />,
+            },
+            {
+              path: "/dashboard/user/orders",
+              element: <UserOrders />,
             },
           ],
         },
