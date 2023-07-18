@@ -4,7 +4,7 @@ import JWT from "jsonwebtoken";
 const JWT_SECRET_KEY = "niladriwillbeagooddeveloperatanyhow"
 
 export const RegisterUser = async (req, res, next) => {
-  const { name, email, password, phone, address } = req.body;
+  const { name, email, password, phone, address,secretQuestion } = req.body;
 
   if (!name || !email || !password || !phone || !address) {
     return res.send({
@@ -15,6 +15,7 @@ export const RegisterUser = async (req, res, next) => {
         password: !password,
         phone: !phone,
         address: !address,
+        secretQuestion:!secretQuestion
       },
     });
   }
@@ -36,6 +37,7 @@ export const RegisterUser = async (req, res, next) => {
       password: hashPassword,
       address,
       phone,
+      secretQuestion
     });
 
     await newUser.save();
@@ -130,6 +132,53 @@ export const LoginUser = async (req, res) => {
     });
   }
 };
+
+
+export const ForgotPassword = async(req,res) =>{
+  try{
+    const { email,newPassword, secretQuestion  } = req.body;
+
+    console.log(req.body)
+
+    if (!email || !newPassword || !secretQuestion) {
+      return res.send({
+        error: "Please provide all required fields.",
+        missingFields: {
+          email: !email,
+          newPassword: !newPassword,
+          secretQuestion:!secretQuestion
+        },
+      });
+    }
+
+    const user = await UserDetails.findOne({email,secretQuestion})
+    if (!user)
+    return res.status(500).send({
+      success: false,
+      message: "No User Exist",
+    });
+
+
+    const hashedPass = await hashedPassword(newPassword);
+    await UserDetails.findByIdAndUpdate(user._id,{password:hashedPass})
+     res.status(200).send({
+      success: true,
+      message: "Password has been changed successfuly",
+      user:user
+    });
+  }
+  catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: "Error while Changing Password",
+      error: error,
+    });
+  }
+}
+
+
+
+
 
 
 

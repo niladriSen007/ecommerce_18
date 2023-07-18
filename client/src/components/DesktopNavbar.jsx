@@ -46,18 +46,23 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
           >
             Categories
           </Link>
+          {/* {(auth?.user?.role!== 0 && auth?.user!=="") && <Link
+            to="/dashboard"
+            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
+          >
+            Dashboard
+          </Link>} */} <Link
+            to="/dashboard"
+            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
+          >
+            Dashboard
+          </Link>
           <Link
             to="/contact"
             className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
           >
             Contact
           </Link>
-          {(auth?.user?.role!== 0 && auth?.user!=="") && <Link
-            to="/dashboard"
-            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
-          >
-            Dashboard
-          </Link>}
         </div>
         <div className="flex items-center gap-6">
           <input

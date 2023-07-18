@@ -20,18 +20,19 @@ export const validateUserAuth = async (req, res, next) => {
 
 export const validateIsAdmin = async (req, res, next) => {
   try {
-    validateUserAuth(req, res, async () => {
-      const isAdminUser = await UserDetails.findById(req.user.id);
+       
+      // console.log("This       "+req.body.parseData._id)
+      const isAdminUser = await UserDetails.findById(req.body.parseData._id);
       
-      if (isAdminUser.role != 1) {
-        return res.status(401).send({
+      if (isAdminUser.role !== 1) {
+        return res.status(200).send({
           success: false,
+          user:true,
+          admin:false,
           message: "UnAuthorized Access",
         });
       }
       else next();
-
-    });
   } catch (e) {
     console.log(error);
     res.status(401).send({

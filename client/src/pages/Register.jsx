@@ -12,6 +12,7 @@ const Register = () => {
     password: "",
     phone: "",
     address: "",
+    secretQuestion:""
   });
 
   const navigateTo = useNavigate()
@@ -33,6 +34,7 @@ const Register = () => {
         password: "",
         phone: "",
         address: "",
+        secretQuestion:""
       };
     });
     // Add your registration logic here
@@ -58,11 +60,11 @@ const Register = () => {
       <h2 className="text-4xl font-bold mb-4 text-indigo-700">Register</h2>
       <div className="flex items-center justify-center">
         <div>
-          <form className="w-[30vw] bg-white rounded-lg shadow-md px-6 ">
+          <form className="w-[30vw] bg-white rounded-lg shadow-md px-6 py-3 ">
             <div className="mb-4">
               <label
                 htmlFor="name"
-                className="block text-indigo-700 text-md font-bold mb-2"
+                className="block text-indigo-700 text-md font-bold mb-1"
               >
                 Name
               </label>
@@ -80,7 +82,7 @@ const Register = () => {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block text-indigo-700 text-md font-bold mb-2"
+                className="block text-indigo-700 text-md font-bold mb-1"
               >
                 Email Address
               </label>
@@ -98,7 +100,7 @@ const Register = () => {
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="block text-indigo-700 text-md font-bold mb-2"
+                className="block text-indigo-700 text-md font-bold mb-1"
               >
                 Password
               </label>
@@ -116,7 +118,7 @@ const Register = () => {
             <div className="mb-4">
               <label
                 htmlFor="phone"
-                className="block text-indigo-700 text-md font-bold mb-2"
+                className="block text-indigo-700 text-md font-bold mb-1"
               >
                 Phone
               </label>
@@ -134,11 +136,11 @@ const Register = () => {
             <div className="mb-4">
               <label
                 htmlFor="address"
-                className="block text-indigo-700 text-md font-bold mb-2"
+                className="block text-indigo-700 text-md font-bold mb-1"
               >
                 Address
               </label>
-              <textarea
+              <input
                 id="address"
                 name="address"
                 value={registerData.address}
@@ -147,7 +149,25 @@ const Register = () => {
                 rows="4"
                 placeholder="Your Address"
                 required
-              ></textarea>
+              ></input>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="address"
+                className="block text-indigo-700 text-md font-bold mb-1"
+              >
+                What is your favourate animal?
+              </label>
+              <input
+                id="secretQuestion"
+                name="secretQuestion"
+                value={registerData.secretQuestion}
+                onChange={handleChange}
+                className="w-full px-4 py-1 rounded-lg border border-indigo-300 focus:border-blue-500 focus:ring-blue-500  outline-none placeholder:text-indigo-600"
+                rows="4"
+                placeholder="Your Answer"
+                required
+              ></input>
             </div>
             <button
               type="submit"
@@ -156,7 +176,7 @@ const Register = () => {
             >
               Register
             </button>
-            <p className="text-indigo-800 text-center font-medium py-2">Already have an Account? <Link to="/login" className="underline">Login here</Link></p>
+            <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 my-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Already have an Account? <Link to="/login" className="underline">Login here</Link></button>
           </form>
         </div>
 

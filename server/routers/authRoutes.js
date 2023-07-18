@@ -1,11 +1,13 @@
 import express from "express"
-import { LoginUser, RegisterUser } from "../controllers/auth.js"
+import { ForgotPassword, LoginUser, RegisterUser } from "../controllers/auth.js"
 import { validateIsAdmin, validateUserAuth } from "../middlewares/authMiddleware.js"
+
 
 const router = express.Router()
 
 router.post("/register",RegisterUser)
 router.post("/login",LoginUser)
-router.get("/admin",validateIsAdmin,(req,res)=>res.send("Admin"))
+router.post("/forgotpassword",ForgotPassword)
+router.post("/dashboard",validateIsAdmin,(req,res)=>res.status(200).send({success:true,message:"Admin",admin:true,user:true}))
 
 export default router
