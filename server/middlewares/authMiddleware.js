@@ -30,11 +30,12 @@ export const validateIsAdmin = async (req, res, next) => {
           user:true,
           admin:false,
           message: "UnAuthorized Access",
+          userData:isAdminUser
         });
       }
       else next();
   } catch (e) {
-    console.log(error);
+    console.log(e);
     res.status(401).send({
       success: false,
       error,
