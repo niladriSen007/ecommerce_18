@@ -35,7 +35,7 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
             Home
           </Link>
           <Link
-            to="#"
+            to="/products"
             className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
           >
             Products

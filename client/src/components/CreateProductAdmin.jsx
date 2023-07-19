@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const REACT_APP_API = "http://localhost:5000";
+import { useNavigate } from "react-router-dom";
 
 const CreateProductAdmin = () => {
   const [product, setProduct] = useState({
@@ -14,16 +15,47 @@ const CreateProductAdmin = () => {
     shipping: 0,
   });
 
+
   const [allCategories, setAllCategories] = useState([]);
+
+  const navigateTo = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: name==="photo" ? e.target.files[0] : value });
+    setProduct({
+      ...product,
+      [name]: name === "photo" ? e.target.files[0] : value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(product);
+    try {
+      const productData = new FormData();
+      productData.append("name", product.name);
+      productData.append("description", product.description);
+      productData.append("price", product.price);
+      productData.append("quantity", product.quantity);
+      productData.append("photo", product.photo);
+      productData.append("category", product.category);
+      console.log(productData)
+      const { data } = axios.post(
+        `${REACT_APP_API}/admin/products/createProduct`,
+        productData
+      );
+      console.log(data)
+      if (data?.success) {
+        toast.error(data?.message);
+      } else {
+        
+        toast.success("Product Created Successfully");
+        navigateTo("/products");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong");
+    }
   };
 
   const fetchAllCategories = async () => {
@@ -117,7 +149,7 @@ const CreateProductAdmin = () => {
             {allCategories.map((category) => (
               <option
                 key={category._id}
-                value={category.name}
+                value={category._id}
                 className="cursor-pointer"
               >
                 {category.name}
@@ -139,29 +171,34 @@ const CreateProductAdmin = () => {
           />
         </div>
         <div className="mb-3">
-                {product.photo && (
-                  <div className="text-center">
-                    <img
-                      src={URL.createObjectURL(product.photo)}
-                      alt="product_photo"
-                      height={"200px"}
-                      className="img img-responsive"
-                    />
-                  </div>
-                )}
-              </div>
+          {product.photo && (
+            <div className="text-center">
+              <img
+                src={URL.createObjectURL(product.photo)}
+                alt="product_photo"
+                height={"200px"}
+                className="img img-responsive"
+              />
+            </div>
+          )}
+        </div>
         <div className="mb-4">
           <label className="block font-semibold mb-1 text-indigo-700">
             Shipping Status
           </label>
-          <input
-            type="text"
-            name="photo"
+          <select
+            name="shipping"
             value={product.shipping}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded border border-indigo-300 outline-none placeholder:text-indigo-700 "
+            className="w-full px-4 py-2 rounded border border-indigo-300 outline-none placeholder:text-indigo-700"
             required
-          />
+          >
+            <option value="" disabled>
+              <span className="text-indigo-700">Select a shipping status</span>
+            </option>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
         </div>
         <button
           type="submit"

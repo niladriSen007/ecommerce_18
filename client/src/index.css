@@ -4,6 +4,7 @@
 @tailwind utilities;
 *{
   font-family: 'Alice', serif;
+  /* overflow-x: hidden; */
 }
 
 
@@ -23,7 +24,7 @@
   perspective: 150rem;
   position: relative;
   height: 20rem;
-  max-width: 320px;
+  max-width: 280px;
   /* margin: 2rem; */
   box-shadow: none;
   background: none;
@@ -41,6 +42,18 @@
   /* padding: 2rem; */
   color: white;
 }
+.card-side-prod {
+  height: 18rem;
+  border-radius: 6px;
+  transition: all 0.8s ease;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  /* padding: 2rem; */
+  color: white;
+}
 
 
 .card:hover .card-side.front {
@@ -48,5 +61,12 @@
 }
 
 .card:hover .card-side.back {
+  transform: rotateY(0deg);
+}
+.card:hover .card-side-prod.front {
+  transform: rotateY(180deg);
+}
+
+.card:hover .card-side-prod.back {
   transform: rotateY(0deg);
 }

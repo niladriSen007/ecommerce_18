@@ -16,7 +16,7 @@ const Card = ({ title, content }) => {
       //   onMouseEnter={handleCardFlip}
       //   onMouseLeave={handleCardFlip}
     >
-      <div className="front card-side" onClick={handleCardFlip}>
+      <div className="front card-side-prod" onClick={handleCardFlip}>
         {/* Front side content */}
         <div className="">
           <img
@@ -29,8 +29,8 @@ const Card = ({ title, content }) => {
       <div className="back card-side" onClick={handleCardFlip}>
         {/* Back side content */}
         <div className="p-2 flex flex-col items-center justify-center h-full">
-          <h2 className="text-xl font-bold text-white">Laptop</h2>
-          <p className="text-white">$123.00</p>
+          <h2 className="text-xl font-bold text-white">{title}</h2>
+          <p className="text-white">{content}</p>
           <div className="bg-white p-2 rounded-full w-12 h-12 flex items-center justify-center">
             <AiOutlineSearch color="blue" size={28} />
           </div>
