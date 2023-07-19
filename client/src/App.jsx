@@ -23,6 +23,8 @@ import UserDashboardMain from "./pages/UserDashboardMain";
 import UserProfile from "./components/UserProfile";
 import UserOrders from "./components/UserOrders";
 import AdminProfile from "./components/AdminProfile";
+import ProductsListPage from "./pages/ProductsListPage";
+import NewCard from "./components/NewCard";
 
 const App = () => {
   const Layout = () => (
@@ -67,11 +69,15 @@ const App = () => {
         },
         {
           path: "/card",
-          element: <Card title={"Hello"} content={"Niladri"} />,
+          element: <NewCard />,
         },
         {
           path: "/contact",
           element: <Contact />,
+        },
+        {
+          path: "/products",
+          element: <ProductsListPage />,
         },
         {
           path: "/register",
