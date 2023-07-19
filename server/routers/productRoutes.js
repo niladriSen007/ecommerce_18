@@ -1,8 +1,13 @@
 import express from 'express'
 import formidable from "express-formidable"
-import { CreateProduct } from '../controllers/product.js'
+import { CreateProduct, GetAllProducts, GetProductPhoto, GetSingleProduct, UpdateProduct } from '../controllers/product.js'
 const router = express.Router()
 
 router.post("/createProduct",formidable(),CreateProduct)
+router.get("/getAllProducts",GetAllProducts)
+router.get("/getSingleProduct/:slug",GetSingleProduct)
+router.get("/getProductPhoto/:id",GetProductPhoto)
+router.delete("/deleteProduct/:id",GetProductPhoto)
+router.put("/updateProduct/:id",formidable(),UpdateProduct)
 
 export default router
