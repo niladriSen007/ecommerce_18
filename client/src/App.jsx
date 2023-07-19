@@ -22,6 +22,7 @@ import UserDashboardSidebar from "./components/UserDashboardSidebar";
 import UserDashboardMain from "./pages/UserDashboardMain";
 import UserProfile from "./components/UserProfile";
 import UserOrders from "./components/UserOrders";
+import AdminProfile from "./components/AdminProfile";
 
 const App = () => {
   const Layout = () => (
@@ -92,6 +93,10 @@ const App = () => {
           path: "/dashboard",
           element: <AdminLayout />,
           children: [
+            {
+              path: "/dashboard/admin/adminProfile",
+              element: <AdminProfile />,
+            },
             {
               path: "/dashboard/admin/createCategory",
               element: <CreateCategoryAdmin />,

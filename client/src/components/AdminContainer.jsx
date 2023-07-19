@@ -14,8 +14,8 @@ const AdminContainer = ({children}) => {
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 bg-white shadow sm:rounded-lg">
                 <p className='text-indigo-600 text-2xl font-extrabold'>Admin Name- <span className="text-indigo-700 text-3xl">{auth?.user?.name}</span></p>
-                <p className='text-indigo-600 text-2xl font-extrabold'>Admin Email- <span className="text-indigo-700 text-3xl">{auth?.user?.email}</span></p>
-                <p className='text-indigo-600 text-2xl font-extrabold'>Admin Contact- <span className="text-indigo-700 text-3xl">{auth?.user?.phone}</span></p>
+                {/* <p className='text-indigo-600 text-2xl font-extrabold'>Admin Email- <span className="text-indigo-700 text-3xl">{auth?.user?.email}</span></p>
+                <p className='text-indigo-600 text-2xl font-extrabold'>Admin Contact- <span className="text-indigo-700 text-3xl">{auth?.user?.phone}</span></p> */}
           </div>
             {children}
         </div>
