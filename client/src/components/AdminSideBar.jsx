@@ -8,8 +8,8 @@ const AdminSideBar = () => {
       </div>
       <ul className="py-4">
         <li className="px-8 py-2 hover:bg-indigo-700">
-          <Link to="#" className="block">
-            Dashboard
+          <Link to="/dashboard/admin/adminProfile" className="block">
+            Profile
           </Link>
         </li>
         <li className="px-8 py-2 hover:bg-indigo-700">
