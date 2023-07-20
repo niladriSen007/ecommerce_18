@@ -24,7 +24,8 @@ const UsersAdmin = () => {
             <p className="text-xl text-indigo-700">Email - {eachUser.email}</p>
             <p className="text-xl text-indigo-700">Address - {eachUser.address}</p>
             <p className="text-xl text-indigo-700">Phone - {eachUser.phone}</p> */}
-            <CardUser name={eachUser.name} email={eachUser.email} phone={eachUser.phone} address={eachUser.address} image={eachUser.image} role={eachUser.role}/>
+            
+              <CardUser name={eachUser.name} email={eachUser.email} phone={eachUser.phone} address={eachUser.address} image={eachUser.image} role={eachUser.role}/>
 
           </div>
         ))}

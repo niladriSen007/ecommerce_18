@@ -20,7 +20,7 @@ const ProductsListPage = () => {
         fetchAllProducts()
     },[])
   return (
-    <div className='grid grid-cols-4 items-center my-16 px-24'>
+    <div className='grid grid-cols-5 gap-12 items-center my-16 px-32'>
         {
             allProducts.map(singleProduct=>(
                 <NewCard key={singleProduct._id} singleProd={singleProduct}/>

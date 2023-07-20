@@ -100,6 +100,10 @@ const App = () => {
           element: <AdminLayout />,
           children: [
             {
+              path: "/dashboard",
+              element: <AdminProfile />,
+            },
+            {
               path: "/dashboard/admin/adminProfile",
               element: <AdminProfile />,
             },
