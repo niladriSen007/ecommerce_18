@@ -1,5 +1,4 @@
 import React from "react";
-import "./NewCard.css";
 const REACT_APP_API = "http://localhost:5000";
 const NewCard = ({ singleProd }) => {
   const { name, description, price, quantity, shipping, category, _id } =
