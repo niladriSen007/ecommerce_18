@@ -27,6 +27,16 @@ const AdminSideBar = () => {
           Create Products
           </Link>
         </li>
+        <li className="px-8 py-2 hover:bg-indigo-700">
+          <Link to="/dashboard/admin/products" className="block">
+          Products
+          </Link>
+        </li>
+        <li className="px-8 py-2 hover:bg-indigo-700">
+          <Link to="/dashboard/admin/createProduct" className="block">
+          Create Products
+          </Link>
+        </li>
       </ul>
     </div>
   );

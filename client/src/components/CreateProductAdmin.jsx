@@ -50,7 +50,7 @@ const CreateProductAdmin = () => {
       } else {
         
         toast.success("Product Created Successfully");
-        navigateTo("/products");
+        navigateTo("/prdashboard/admin/productsoducts");
       }
     } catch (error) {
       console.log(error);

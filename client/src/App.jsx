@@ -25,6 +25,7 @@ import UserOrders from "./components/UserOrders";
 import AdminProfile from "./components/AdminProfile";
 import ProductsListPage from "./pages/ProductsListPage";
 import NewCard from "./components/NewCard";
+import AdminProducsPage from "./components/AdminProducsPage";
 
 const App = () => {
   const Layout = () => (
@@ -99,13 +100,14 @@ const App = () => {
           path: "/dashboard",
           element: <AdminLayout />,
           children: [
-            {
-              path: "/dashboard",
-              element: <AdminProfile />,
-            },
+            
             {
               path: "/dashboard/admin/adminProfile",
               element: <AdminProfile />,
+            },
+            {
+              path: "/dashboard/admin/products",
+              element: <AdminProducsPage />,
             },
             {
               path: "/dashboard/admin/createCategory",

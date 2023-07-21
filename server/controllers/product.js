@@ -76,7 +76,7 @@ export const GetAllProducts = async (req, res) => {
 
 export const GetSingleProduct = async (req, res) => {
   try {
-    const product = await ProductDetails.findOne({ slug: req.params.slug })
+    const product = await ProductDetails.findById(req.params.id)
       .select("-photo")
       .populate("category");
     res.status(200).send({
@@ -115,9 +115,10 @@ export const GetProductPhoto = async (req, res) => {
 
 export const UpdateProduct = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, price, category, quantity } =
       req.fields;
-    const { photo } = req.files;
+      // console.log(req.fields)
+    // const { photo } = req.files;
     //alidation
     switch (true) {
       case !name:
@@ -130,10 +131,10 @@ export const UpdateProduct = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+      // case photo && photo.size > 1000000:
+      //   return res
+      //     .status(500)
+      //     .send({ error: "photo is Required and should be less then 1mb" });
     }
 
     const product = await ProductDetails.findByIdAndUpdate(
@@ -141,10 +142,8 @@ export const UpdateProduct = async (req, res) => {
       { ...req.fields, slug: slugify(name) },
       { new: true }
     );
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
-    }
+
+    console.log(product)
     await product.save();
     res.status(201).send({
       success: true,
@@ -165,7 +164,7 @@ export const UpdateProduct = async (req, res) => {
 
 export const DeleteProduct = async (req, res) => {
   try {
-    await ProductDetails.findByIdAndDelete(req.params.pid).select("-photo");
+    await ProductDetails.findByIdAndDelete(req.params.id).select("-photo");
     res.status(200).send({
       success: true,
       message: "Product Deleted successfully",
