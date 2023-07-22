@@ -131,11 +131,10 @@ export const UpdateProduct = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      // case photo && photo.size > 1000000:
-      //   return res
-      //     .status(500)
-      //     .send({ error: "photo is Required and should be less then 1mb" });
+
     }
+
+    
 
     const product = await ProductDetails.findByIdAndUpdate(
       req.params.id,
@@ -143,7 +142,7 @@ export const UpdateProduct = async (req, res) => {
       { new: true }
     );
 
-    console.log(product)
+    // console.log(product)
     await product.save();
     res.status(201).send({
       success: true,

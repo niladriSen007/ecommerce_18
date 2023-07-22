@@ -32,11 +32,11 @@ const AdminSideBar = () => {
           Products
           </Link>
         </li>
-        <li className="px-8 py-2 hover:bg-indigo-700">
+        {/* <li className="px-8 py-2 hover:bg-indigo-700">
           <Link to="/dashboard/admin/createProduct" className="block">
           Create Products
           </Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
