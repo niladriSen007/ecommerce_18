@@ -3,7 +3,7 @@ const REACT_APP_API = "http://localhost:5000";
 const NewCard = ({ singleProd }) => {
   const { name, description, price, quantity, shipping, category, _id } =
     singleProd;
-  console.log(singleProd);
+  // console.log(singleProd);
   return (
     <div className="bg-white w-60 h-[430px] rounded-lg shadow-md overflow-hidden transform transition duration-300  cursor-pointer border-2 border-gray-300 flex flex-col items-center">
       <img
