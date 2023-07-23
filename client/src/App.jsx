@@ -26,6 +26,7 @@ import AdminProfile from "./components/AdminProfile";
 import ProductsListPage from "./pages/ProductsListPage";
 import NewCard from "./components/NewCard";
 import AdminProducsPage from "./components/AdminProducsPage";
+import SingleProductPage from "./pages/SingleProductPage";
 
 const App = () => {
   const Layout = () => (
@@ -136,6 +137,10 @@ const App = () => {
               element: <UserOrders />,
             },
           ],
+        },
+        {
+          path: "/products/:id",
+          element: <SingleProductPage />,
         },
         {
           path: "/*",
