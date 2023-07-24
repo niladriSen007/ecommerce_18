@@ -19,6 +19,7 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
   const logoffUser = () => {
     setAuth((_) => ({ ..._, user: "" }));
     localStorage.removeItem("activeUser");
+    localStorage.removeItem("cartDetails");
     toast.success("Logged out successfully");
   };
 
@@ -36,13 +37,16 @@ const allCategories = useCategory()
 
 //console.log(allCategories)
 
-const {cartItem} = useCart()
+// const {cartItem} = useCart()
 
 // const options = [
 //   { label: 'Option 1', value: 'option-1' },
 //   { label: 'Option 2', value: 'option-2' },
 //   { label: 'Option 3', value: 'option-3' },
 // ];
+
+
+  const cartItem = JSON.parse(localStorage.getItem("cartDetails"))
 
   return (
     <div className="px-32 shadow-lg">
@@ -119,14 +123,14 @@ const {cartItem} = useCart()
             className="border-2 border-gray-300 px-2 outline-none rounded-md placeholder:text-indigo-800"
             placeholder="🔍Search Product"
           />
-          { auth?.user && <div className="flex items-center gap-1">
+          { (auth?.user) && <div className="flex items-center gap-1">
             <AiOutlineShoppingCart className="text-indigo-800" size={24} />
             <Link
               to="/users/cart"
               className="text-indigo-800  text-xl hover:text-indigo-900 flex"
             >
               Cart
-              <p className="absolute top-10 right-[16.5vw] bg-indigo-700 text-white p-2 rounded-full flex items-center justify-center w-6 h-6"> {cartItem?.length}</p>
+              <p className="absolute top-10 right-[16.5vw] bg-indigo-700 text-white p-2 rounded-full flex items-center justify-center w-6 h-6"> {cartItem?.length > 0 ? cartItem?.length : 0}</p>
             </Link>
           </div>}
           <div className="flex items-center gap-1">

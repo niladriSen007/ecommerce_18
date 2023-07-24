@@ -39,6 +39,7 @@ const SingleProductPage = () => {
     fetchSingleProduct();
   }, []);
 
+  // const items = JSON.parse(localStorage.getItem("cartDetails"))
 
   const {cartItem,setCartItem} = useCart()
   
@@ -46,9 +47,16 @@ const SingleProductPage = () => {
   const handleAddToCart = async() =>{
     const { data : prod} = await axios.get(`${REACT_APP_API}/admin/products/getSingleProduct/${prodId}`)
     console.log(prod.product)
-    setCartItem(prev=>[...prev,prod.product])
+    const newProd = {...prod.product,quantity:1}
+    // items.push(newProd)
+    for(let data in cartItem)
+      {
+        if(cartItem[data] === null)
+          cartItem.splice(data,1)
+      }
+    setCartItem(prev=>[...prev,newProd])
+    localStorage.setItem("cartDetails",JSON.stringify([...cartItem,newProd]))
     toast.success("Added to cart successfully")
-    localStorage.setItem("cartDetails",JSON.stringify(prod.product))
     navigateTo("/products")
   }
 
