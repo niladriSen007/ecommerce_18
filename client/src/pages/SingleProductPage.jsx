@@ -52,12 +52,18 @@ const SingleProductPage = () => {
     for(let data in cartItem)
       {
         if(cartItem[data] === null)
-          cartItem.splice(data,1)
+          setCartItem(prev=>prev.splice(data,1))
       }
     setCartItem(prev=>[...prev,newProd])
-    localStorage.setItem("cartDetails",JSON.stringify([...cartItem,newProd]))
-    toast.success("Added to cart successfully")
-    navigateTo("/products")
+    let arr=[];
+    for(let data in cartItem)
+      {
+        if(cartItem[data] !== null)
+          arr.push(cartItem[data])
+      }
+      localStorage.setItem("cartDetails",JSON.stringify([...arr,newProd]))
+      toast.success("Added to cart successfully")
+      navigateTo("/products")
   }
 
   console.log(cartItem)
