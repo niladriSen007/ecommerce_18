@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import { ProductDetails } from "../models/productDetails.js";
 import fs from "fs";
+import { CategoryDetails } from "../models/categoryDetails.js";
 
 export const CreateProduct = async (req, res) => {
   try {
@@ -88,7 +89,7 @@ export const GetSingleProduct = async (req, res) => {
     console.log(e);
     res.status(500).send({
       success: false,
-      error,
+      e,
       message: "Error in fetching product",
     });
   }
@@ -177,3 +178,23 @@ export const DeleteProduct = async (req, res) => {
     });
   }
 };
+
+
+export const GetProductByCategory = async(req,res) =>{
+  try{
+    const categoryName = await CategoryDetails.findById(req.params.id)
+    const prodByCat = await ProductDetails.find({category:categoryName._id})
+    res.status(200).send({ 
+      success: true,
+      products:prodByCat
+  })
+  }
+  catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while fetching product",
+      error,
+    });
+  }
+}

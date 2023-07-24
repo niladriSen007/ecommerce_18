@@ -3,6 +3,9 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdAccountCircle } from "react-icons/md";
 import { useAuth } from "../contextApi/store";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { useCategory } from "../hooks/useCategory";
+import { useCart } from "../contextApi/cart";
 
 const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
   const toggleMenu = () => {
@@ -15,9 +18,31 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
 
   const logoffUser = () => {
     setAuth((_) => ({ ..._, user: "" }));
-    localStorage.removeItem("activeUser")
-    toast.success("Logged out successfully")
+    localStorage.removeItem("activeUser");
+    toast.success("Logged out successfully");
   };
+
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
+
+const allCategories = useCategory()
+
+
+
+
+//console.log(allCategories)
+
+const {cartItem} = useCart()
+
+// const options = [
+//   { label: 'Option 1', value: 'option-1' },
+//   { label: 'Option 2', value: 'option-2' },
+//   { label: 'Option 3', value: 'option-3' },
+// ];
 
   return (
     <div className="px-32 shadow-lg">
@@ -42,16 +67,40 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
           </Link>
           <Link
             to="#"
-            className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
+            className="text-indigo-800  text-xl font-medium hover:text-indigo-900" onClick={toggleDropdown}
           >
             Categories
+            <div className="relative inline-block">
+              {/* <button
+                
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              >
+                Select an option
+              </button> */}
+              {isOpen && (
+                <ul
+                  className="absolute top-full right-0 mt-2 py-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
+                  aria-label="dropdown-menu"
+                >
+                  {allCategories?.map((option) => (
+                    <li
+                      key={option._id}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <Link to={`/products/category/${option._id}`}>{option.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </Link>
           {/* {(auth?.user?.role!== 0 && auth?.user!=="") && <Link
             to="/dashboard"
             className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
           >
             Dashboard
-          </Link>} */} <Link
+          </Link>} */}{" "}
+          <Link
             to="/dashboard"
             className="text-indigo-800  text-xl font-medium hover:text-indigo-900"
           >
@@ -70,15 +119,16 @@ const DesktopNavbar = ({ isMenuOpen, setMenuOpen }) => {
             className="border-2 border-gray-300 px-2 outline-none rounded-md placeholder:text-indigo-800"
             placeholder="🔍Search Product"
           />
-          <div className="flex items-center gap-1">
+          { auth?.user && <div className="flex items-center gap-1">
             <AiOutlineShoppingCart className="text-indigo-800" size={24} />
             <Link
-              to="#"
-              className="text-indigo-800  text-xl hover:text-indigo-900"
+              to="/users/cart"
+              className="text-indigo-800  text-xl hover:text-indigo-900 flex"
             >
               Cart
+              <p className="absolute top-10 right-[16.5vw] bg-indigo-700 text-white p-2 rounded-full flex items-center justify-center w-6 h-6"> {cartItem?.length}</p>
             </Link>
-          </div>
+          </div>}
           <div className="flex items-center gap-1">
             <MdAccountCircle className="text-indigo-800" size={24} />
             <Link

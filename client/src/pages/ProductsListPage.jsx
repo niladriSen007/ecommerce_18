@@ -38,7 +38,7 @@ const ProductsListPage = () => {
       <FilterProduct fetchFilteredProducts={fetchFilteredProducts} />
       <div className="flex flex-col gap-10 my-16 px-32">
         <h2 className="text-4xl font-bold">Our Products</h2>
-        <div className="grid grid-cols-5 gap-32 items-center ">
+        <div className="grid grid-cols-4 gap-32 items-center ">
           {demoProducts.map((singleProduct) => (
             <NewCard key={singleProduct._id} singleProd={singleProduct} />
           ))}

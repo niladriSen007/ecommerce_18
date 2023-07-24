@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const REACT_APP_API = "http://localhost:5000";
 
@@ -97,7 +98,7 @@ const FilterProduct = ({ fetchFilteredProducts }) => {
   // console.log(selectedRanges[selectedRanges.length - 1].value2);
 
   return (
-    <div className="py-24  px-6 border rounded-md shadow-md w-[20vw] h-screen bg-indigo-200">
+    <div className="py-24  px-6 border rounded-md shadow-md w-[20vw] left-0 top-0 sticky bg-indigo-200">
       <h2 className="text-lg font-semibold mb-2">Filter Products</h2>
       <div className="mb-4">
         <label htmlFor="category" className="block font-medium mb-1">
