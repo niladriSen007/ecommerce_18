@@ -27,6 +27,8 @@ import ProductsListPage from "./pages/ProductsListPage";
 import NewCard from "./components/NewCard";
 import AdminProducsPage from "./components/AdminProducsPage";
 import SingleProductPage from "./pages/SingleProductPage";
+import GetProductsByCategory from "./pages/GetProductsByCategory";
+import Cart from "./pages/cart";
 
 const App = () => {
   const Layout = () => (
@@ -141,6 +143,14 @@ const App = () => {
         {
           path: "/products/:id",
           element: <SingleProductPage />,
+        },
+        {
+          path: "/products/category/:id",
+          element: <GetProductsByCategory />,
+        },
+        {
+          path: "/users/cart",
+          element: <Cart />,
         },
         {
           path: "/*",

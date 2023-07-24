@@ -21,7 +21,7 @@ const NewCard = ({ singleProd }) => {
           </button>
         </div>
         <div className="p-3 w-56 flex flex-col gap-1 ">
-          <h3 className="text-lg font-semibold ">{name}</h3>
+          <h3 className="text-lg font-semibold ">{name.substring(0,6)}</h3>
           <p className="text-gray-600 ">{description.substring(0, 6)}</p>
           <p className="text-green-600 font-bold">
             Rs. {price}{" "}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 const REACT_APP_API = "http://localhost:5000";
 import { useNavigate } from "react-router-dom";
+import {useCategory} from "../hooks/useCategory";
 
 const CreateProductAdmin = () => {
   const [product, setProduct] = useState({
@@ -16,7 +17,7 @@ const CreateProductAdmin = () => {
   });
 
 
-  const [allCategories, setAllCategories] = useState([]);
+  // const [allCategories, setAllCategories] = useState([]);
 
   const navigateTo = useNavigate()
 
@@ -58,22 +59,25 @@ const CreateProductAdmin = () => {
     }
   };
 
-  const fetchAllCategories = async () => {
-    try {
-      const { data: allCategories } = await axios.get(
-        `${REACT_APP_API}/admin/category/getAllCategory`
-      );
-      console.log(allCategories.category);
-      setAllCategories(allCategories.category);
-    } catch (e) {
-      console.log(e);
-      toast.error("Something wwent wrong in getting catgeory");
-    }
-  };
+  // const fetchAllCategories = async () => {
+  //   try {
+  //     const { data: allCategories } = await axios.get(
+  //       `${REACT_APP_API}/admin/category/getAllCategory`
+  //     );
+  //     console.log(allCategories.category);
+  //     setAllCategories(allCategories.category);
+  //   } catch (e) {
+  //     console.log(e);
+  //     toast.error("Something wwent wrong in getting catgeory");
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchAllCategories();
-  }, []);
+  // useEffect(() => {
+  //   fetchAllCategories();
+  // }, []);
+
+  //created custom hook for fetching categories
+  const allCategories = useCategory()
 
   return (
     <div className="bg-white p-8 pt-4 rounded shadow-md">
@@ -146,7 +150,7 @@ const CreateProductAdmin = () => {
             <option value="" disabled>
               <span className="text-indigo-700">Select a category</span>
             </option>
-            {allCategories.map((category) => (
+            {allCategories?.map((category) => (
               <option
                 key={category._id}
                 value={category._id}

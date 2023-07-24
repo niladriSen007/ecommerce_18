@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MobileNavbar from './MobileNavbar';
 import DesktopNavbar from './DesktopNavbar';
+const REACT_APP_API = "http://localhost:5000";
 
 const Navbar = () => {
 
