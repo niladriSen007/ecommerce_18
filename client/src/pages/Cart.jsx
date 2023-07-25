@@ -6,7 +6,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { GrSubtractCircle } from "react-icons/gr";
 import DropIn from "braintree-web-drop-in-react";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -43,12 +43,14 @@ const Cart = () => {
     }
     const price = cartItemLS?.reduce((acc, product) => acc + product.price, 0);
     setTotalPrice(price);
-  }, [cartItemLS,cartItem]);
+  }, [cartItemLS, cartItem]);
 
   //get payment gateway token
   const getToken = async () => {
     try {
-      const { data } = await axios.get(`${REACT_APP_API}/admin/products/braintree/token`);
+      const { data } = await axios.get(
+        `${REACT_APP_API}/admin/products/braintree/token`
+      );
       setClientToken(data?.clientToken);
     } catch (error) {
       console.log(error);
@@ -61,26 +63,26 @@ const Cart = () => {
     getToken();
   }, [auth?.user]);
 
-
-  const handlePayment = () =>{}
-  // const handlePayment = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { nonce } = await instance.requestPaymentMethod();
-  //     const { data } = await axios.post("/admin/products/braintree/payment", {
-  //       nonce,
-  //       cartItem,
-  //     });
-  //     setLoading(false);
-  //     localStorage.removeItem("cartDetails");
-  //     setCartItem([]);
-  //     navigate("/products");
-  //     toast.success("Payment Completed Successfully ");
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoading(false);
-  //   }
-  // };
+  // const handlePayment = () =>{}
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(`${REACT_APP_API}/admin/products/braintree/payment`, {
+        nonce,
+        cartItem,
+        user:auth?.user
+      });
+      setLoading(false);
+      localStorage.removeItem("cartDetails");
+      setCartItem([]);
+      navigate("/products");
+      toast.success("Payment Completed Successfully ");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   // const total = Math.floor(totalPrice * .05)
 
   return (
@@ -138,7 +140,7 @@ const Cart = () => {
 
             <div className="mt-4 flex items-start justify-between">
               <h2 className="text-lg font-bold mb-2">
-                Price ({cartItem.length}) items
+                Price ({cartItem?.length}) items
               </h2>
               <p className="text-xl">${totalPrice}</p>
             </div>
@@ -149,7 +151,9 @@ const Cart = () => {
             <hr className="w-70 border-2 border-gray-300 rounded-full" />
             <div className="mt-4 flex items-start justify-between">
               <h2 className="text-lg font-bold mb-2">Total Price:</h2>
-              <p className="text-xl">${totalPrice + Math.floor(totalPrice * 0.005)}</p>
+              <p className="text-xl">
+                ${totalPrice + Math.floor(totalPrice * 0.005)}
+              </p>
             </div>
             <button className="w-64 mt-4 bg-red-600 text-white rounded-md p-2">
               CHECKOUT
@@ -162,24 +166,31 @@ const Cart = () => {
               Deliver to - {auth?.user?.address}
             </p> */}
             <div className="mt-4">
-              <DropIn
-                options={{
-                  authorization: clientToken,
-                  paypal: {
-                    flow: "vault",
-                  },
-                }}
-                onInstance={(instance) => setInstance(instance)}
-              />
+              {!clientToken || !cartItemLS?.length ? (
+                <>
+                  <p></p>
+                </>
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: clientToken,
+                      paypal: {
+                        flow: "vault",
+                      },
+                    }}
+                    onInstance={(instance) => setInstance(instance)}
+                  />
 
-              <button
-                className="p-2 bg-green-600 rounded-md w-64 text-white font-bold cursor-pointer"
-                onClick={handlePayment}
-                // disabled={loading || !instance || !auth?.user?.address}
-                
-              >
-                {loading ? "Processing ...." : "Make Payment"}
-              </button>
+                  <button
+                    className="p-2 bg-green-600 rounded-md w-64 text-white font-bold cursor-pointer"
+                    onClick={handlePayment}
+                    disabled={loading || !instance || !auth?.user?.address}
+                  >
+                    {loading ? "Processing ...." : "Make Payment"}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
