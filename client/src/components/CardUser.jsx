@@ -30,11 +30,11 @@ const CardUser = ({ name, email, address, phone,image,role }) => {
         {/* Back side content */}
         <div className="p-2 flex flex-col items-center justify-center h-full">
           <div className="w-44 h-12 flex flex-col items-start justify-center">
-            <p className="text-lg text-white font-bold">Name - <span className="font-normal">{name}</span></p>
-            <p className="text-lg text-white font-bold">Email - <span className="font-normal">{email}</span></p>
-            <p className="text-lg text-white font-bold">Address - <span className="font-normal">{address}</span></p>
-            <p className="text-lg text-white font-bold">Phone - <span className="font-normal">{phone}</span></p>
-            <p className="text-lg text-white font-bold">Role - <span className="font-normal">{role === 0 ? "User" : "Admin"}</span></p>
+            <p className="text-sm text-white font-bold">Name - <span className="font-normal">{name}</span></p>
+            <p className="text-sm text-white font-bold">Email - <span className="font-normal">{email}</span></p>
+            <p className="text-sm text-white font-bold">Address - <span className="font-normal">{address}</span></p>
+            <p className="text-sm text-white font-bold">Phone - <span className="font-normal">{phone}</span></p>
+            <p className="text-sm text-white font-bold">Role - <span className="font-normal">{role === 0 ? "User" : "Admin"}</span></p>
           </div>
         </div>
       </div>
